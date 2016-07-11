@@ -32,10 +32,10 @@ class ConfirmationsController < Milia::ConfirmationsController
 	       @confirmable.skip_confirm_change_password
 
 	      log_action( "devise pass-thru" )
-	      self.resource = resource_class.confirm_by_token(params[:confimation_token])
+	      self.resource = resource_class.confirm_by_token(params[:confirmation_token])
 	      yield resource if block_given?
 
-		  if resource.error.empty?
+		  if resource.errors.empty?
 		  	set_flash_message(:notice, :confirmed) if is_flashing_format?
 		  end
 
@@ -65,5 +65,4 @@ class ConfirmationsController < Milia::ConfirmationsController
 	def set_confirmable()
 		@confirmable = User.find_or_initialize_with_error_by(:confirmation_token, params[:confirmation_token])
 	end
-
 end
