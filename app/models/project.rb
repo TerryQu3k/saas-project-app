@@ -7,7 +7,7 @@ class Project < ActiveRecord::Base
   has_many :users, through: :user_projects
 
   def free_plan_can_only_have_one_project
-  	if self.new_record? && (tenant.project.count > 0) && (tenant.plan == 'free')
+  	if self.new_record? && (tenant.projects.count > 0) && (tenant.plan == 'free')
   		errors.add(:base, "Free plans connot have more than one project")
   	end
   end
